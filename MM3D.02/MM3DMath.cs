@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MM3D._02
 {
+    //test commentary
     // V_i переглянути посилання t на H має бути < 10
     class MM3DMath
     {
