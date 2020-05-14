@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +12,7 @@ using System.Globalization;
 using Chart3DLib;
 using MM3D;
 using System.Windows.Forms.DataVisualization.Charting;
-//!!!
+
 namespace MM3D._02
 {
     public partial class Form1 : Form
@@ -1830,6 +1830,11 @@ namespace MM3D._02
         }
 
         private void radioButton44_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown8_ValueChanged(object sender, EventArgs e)
         {
 
         }
