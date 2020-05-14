@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace MM3D._02
 {
-    //test commentary
     // V_i переглянути посилання t на H має бути < 10
     class MM3DMath
     {
@@ -15,6 +14,7 @@ namespace MM3D._02
            m_time = 38 * 3,
            m1 = 11,
            m2 = 11,
+            m2_ = 7,
             m = 0,
            m3 = 11,
             m3_ = 5,
@@ -222,6 +222,10 @@ namespace MM3D._02
                         {
                             T_b[t, i1, i2, i3] = 0;
                         }
+                        for (int i3 = 0; i3 <= 2 - 1; i3++)
+                        {
+                            C_b[t, i1, i2, i3] = 0;
+                        }
                         for (int i3 = 0; i3 <= m3_ - 1; i3++)
                         {
                             C_b[t, i1, i2, i3] = 0;
@@ -233,7 +237,13 @@ namespace MM3D._02
             for (int i1 = 1; i1 < m1 - 1; i1++)
                 for (int i2 = 1; i2 < m2 - 1; i2++)
                 {
-                    for (int i3 = 1; i3 < m3_; i3++) 
+                    for (int i3 = 1; i3 < m2_; i3++) 
+                    {
+                        C[0, i1, i2, i3] = C_0;
+                        H[0, i1, i2, i3] = H_0;
+                        H_b[0, i1, i2, i3] = H_0;
+                    }
+                    for (int i3 = 1; i3 < m3_; i3++)
                     {
                         C[0, i1, i2, i3] = C_0;
                         H[0, i1, i2, i3] = H_0;
@@ -256,6 +266,12 @@ namespace MM3D._02
                         H[t, i1, i2, 0] = H_0;
                         H_b[t, i1, i2, 0] = H_0;
 
+                        // t=time*3 x=i y=i z=m2_-1
+                        C[t, i1, i2, m2_] = C_1;
+                        T[t, i1, i2, m3 - 1] = T_0;
+                        H[t, i1, i2, m2_] = H_1;
+                        H_b[t, i1, i2, m2_] = H_1;
+
                         // t=time*3 x=i y=i z=m3_-1
                         C[t, i1, i2, m3_] = C_1;
                         T[t, i1, i2, m3 - 1] = T_0;
@@ -270,6 +286,13 @@ namespace MM3D._02
             for (int t = 0; t < m_time; t++)
                 for (int i2 = 0; i2 < m2; i2++)
                 {
+                    for (int i3 = 0; i3 < m2_; i3++)
+                    {
+                        C[t, m1 - 1, i2, i3] = C_2;
+                        H[t, m1 - 1, i2, i3] = H_2;
+                        H_b[t, m1 - 1, i2, i3] = H_2;
+                    }
+
                     for (int i3 = 0; i3 < m3_; i3++)
                     {
                         C[t, m1 - 1, i2, i3] = C_2;
@@ -287,13 +310,20 @@ namespace MM3D._02
             for (int t = 0; t < m_time; t++)
                 for (int i1 = 0; i1 < m1; i1++)
                 {
+                    for (int i3 = 0; i3 < m2_; i3++)
+                    {
+                        C[t, i1, m2 - 1, i3] = C_2;
+                        H[t, i1, m2 - 1, i3] = H_2;
+                        H_b[t, i1, m2 - 1, i3] = H_2;
+                    }
+
                     for (int i3 = 0; i3 < m3_; i3++)
                     {
                         C[t, i1, m2 - 1, i3] = C_2;
                         H[t, i1, m2 - 1, i3] = H_2;
                         H_b[t, i1, m2 - 1, i3] = H_2;
                     }
-                    
+
                     for (int i3 = 0; i3 < m3; i3++)
                     {
                         T[t, i1, m2 - 1, i3] = T_2;
@@ -305,6 +335,13 @@ namespace MM3D._02
             for (int t = 0; t < m_time; t++)
                 for (int i2 = 0; i2 < m2; i2++)
                 {
+                    for (int i3 = 0; i3 < m2_; i3++)
+                    {
+                        C[t, 0, i2, i3] = C_1;
+                        H[t, 0, i2, i3] = H_1;
+                        H_b[t, 0, i2, i3] = H_1;
+                    }
+
                     for (int i3 = 0; i3 < m3_; i3++)
                     {
                         C[t, 0, i2, i3] = C_1;
@@ -322,6 +359,13 @@ namespace MM3D._02
             for (int t = 0; t < m_time; t++)
                 for (int i1 = 0; i1 < m1; i1++)
                 {
+                    for (int i3 = 0; i3 < m2_; i3++)
+                    {
+                        C[t, i1, 0, i3] = C_1;
+                        H[t, i1, 0, i3] = H_1;
+                        H_b[t, i1, 0, i3] = H_1;
+                    }
+
                     for (int i3 = 0; i3 < m3_; i3++)
                     {
                         C[t, i1, 0, i3] = C_1;
@@ -569,7 +613,7 @@ namespace MM3D._02
 
             for (int i1 = 0; i1 < m1; i1++)
                 for (int i2 = 0; i2 < m2; i2++)
-                    for (int i3 = 0; i3 < m3_; i3++)     ///////////////
+                    for (int i3 = 0; i3 < m2_; i3++)     ///////////////
                     {
                         switch (n)
                         {
@@ -578,6 +622,72 @@ namespace MM3D._02
                                     if (i1 == m1 - 1)
                                         V[time, i1, i2, i3] =
                                          -K_(i1, i2, i3, t, n) * (/*H1*/H[time, i1, i2, i3] - /*H1*/H[time, i1 - 1, i2, i3]) / (h1)
+                                         + /*V_C1*/V_C_(i1, i2, i3, t) * (C[time, i1, i2, i3] - C[time, i1 - 1, i2, i3]) / (h1)
+                                         + /*V_C1*/V_T_(i1, i2, i3, t) * (T[time, i1, i2, i3] - T[time, i1 - 1, i2, i3]) / (h1);
+                                    else
+                                        if (i1 == 0)
+                                        V[time, i1, i2, i3] =
+                                            -K_(i1, i2, i3, t, n) * (/*H1*/H[time, i1 + 1, i2, i3] - /*H1*/H[time, i1, i2, i3]) / (h1)
+                                            + /*V_C1*/V_C_(i1, i2, i3, t) * (C[time, i1 + 1, i2, i3] - C[time, i1, i2, i3]) / (h1)
+                                            + /*V_C1*/V_T_(i1, i2, i3, t) * (T[time, i1 + 1, i2, i3] - T[time, i1, i2, i3]) / (h1);
+                                    else
+                                        V[time, i1, i2, i3] =
+                                        -K_(i1, i2, i3, t, n) * (/*H1*/H[time, i1 + 1, i2, i3] - /*H1*/H[time, i1 - 1, i2, i3]) / (2 * h1)
+                                        + /*V_C1*/V_C_(i1, i2, i3, t) * (C[time, i1 + 1, i2, i3] - C[time, i1 - 1, i2, i3]) / (2 * h1)
+                                        + /*V_C1*/V_T_(i1, i2, i3, t) * (T[time, i1 + 1, i2, i3] - T[time, i1 - 1, i2, i3]) / (2 * h1);
+                                    break;
+                                }
+                            case 2:
+                                {                                    
+                                    if (i2 == m2 - 1)
+                                        V[time, i1, i2, i3] =
+                                         -K_(i1, i2, i3, t, n) * (/*H2*/H[time, i1, i2, i3] - /*H2*/H[time, i1, i2 - 1, i3]) / (h2) +
+                                       /*V_C2*/V_C_(i1, i2, i3, t) * (C[time, i1, i2, i3] - C[time, i1, i2 - 1, i3]) / (h2) +
+                                       /*V_C2*/V_T_(i1, i2, i3, t) * (T[time, i1, i2, i3] - T[time, i1, i2 - 1, i3]) / (h2);
+                                    else
+                                        if (i2 == 0)
+                                        V[time, i1, i2, i3] =
+                                        -K_(i1, i2, i3, t, n) * (/*H2*/H[time, i1, i2 + 1, i3] - /*H2*/H[time, i1, i2, i3]) / (h2) +
+                                      /*V_C2*/V_C_(i1, i2, i3, t) * (C[time, i1, i2 + 1, i3] - C[time, i1, i2, i3]) / (h2) +
+                                      /*V_C2*/V_T_(i1, i2, i3, t) * (T[time, i1, i2 + 1, i3] - T[time, i1, i2, i3]) / (h2);
+                                    else
+                                        V[time, i1, i2, i3] =
+                                        -K_(i1, i2, i3, t, n) * (/*H2*/H[time, i1, i2 + 1, i3] - /*H2*/H[time, i1, i2 - 1, i3]) / (2 * h2) +
+                                      /*V_C2*/V_C_(i1, i2, i3, t) * (C[time, i1, i2 + 1, i3] - C[time, i1, i2 - 1, i3]) / (2 * h2) +
+                                      /*V_C2*/V_T_(i1, i2, i3, t) * (T[time, i1, i2 + 1, i3] - T[time, i1, i2 - 1, i3]) / (2 * h2);
+                                    break;
+                                }
+                            case 3:
+                                {                                    
+                                    if (i3 == m2_ - 1)          ///////////////////
+                                        V[time, i1, i2, i3] =
+                                        -K_(i1, i2, i3, t, n) * (/*H3*/H[time, i1, i2, i3] - /*H3*/H[time, i1, i2, i3 - 1]) / (h3) +
+                                      /*V_C3*/V_C_(i1, i2, i3, t) * (C[time, i1, i2, i3] - C[time, i1, i2, i3 - 1]) / (h3) +
+                                      /*V_C3*/V_T_(i1, i2, i3, t) * (T[time, i1, i2, i3] - T[time, i1, i2, i3 - 1]) / (h3);
+                                    else
+                                    if (i3 == 0)
+                                        V[time, i1, i2, i3] =
+                                        -K_(i1, i2, i3, t, n) * (/*H3*/H[time, i1, i2, i3 + 1] - /*H3*/H[time, i1, i2, i3]) / (h3) +
+                                      /*V_C3*/V_C_(i1, i2, i3, t) * (C[time, i1, i2, i3 + 1] - C[time, i1, i2, i3]) / (h3) +
+                                      /*V_C3*/V_T_(i1, i2, i3, t) * (T[time, i1, i2, i3 + 1] - T[time, i1, i2, i3]) / (h3);
+                                    else
+                                        V[time, i1, i2, i3] =
+                                            -K_(i1, i2, i3, t, n) * (/*H3*/H[time, i1, i2, i3 + 1] - /*H3*/H[time, i1, i2, i3 - 1]) / (2 * h3) +
+                                          /*V_C3*/V_C_(i1, i2, i3, t) * (C[time, i1, i2, i3 + 1] - C[time, i1, i2, i3 - 1]) / (2 * h3) +
+                                          /*V_C3*/V_T_(i1, i2, i3, t) * (T[time, i1, i2, i3 + 1] - T[time, i1, i2, i3 - 1]) / (2 * h3);
+                                    break;
+                                }
+                        }
+                    }
+                    for (int i3 = 0; i3 < m3_; i3++)     ///////////////
+                    {
+                        switch (n)
+                        {
+                            case 1:
+                                {
+                                    if ( i1 == m1 - 1)
+                                        V[time, i1, i2, i3] =
+                                         -K_( i1, i2, i3, t, n) * (/*H1*/H[time, i1, i2, i3] - /*H1*/H[time, i1 - 1, i2, i3]) / (h1)
                                          + /*V_C1*/V_C_(i1, i2, i3, t) * (C[time, i1, i2, i3] - C[time, i1 - 1, i2, i3]) / (h1)
                                          + /*V_C1*/V_T_(i1, i2, i3, t) * (T[time, i1, i2, i3] - T[time, i1 - 1, i2, i3]) / (h1);
                                     else
@@ -712,7 +822,7 @@ namespace MM3D._02
                                 Alpha[0] = 0;
                                 Beta[0] = T[time, 0, i2, i3];
 
-                                if (i3 <= m3_)
+                                if (i3 <= m2_)
                                 {
                                     for (int i = 1; i < m1 - 1; i++)
                                     {
@@ -726,6 +836,28 @@ namespace MM3D._02
                                     }
                                 }
                                 /*
+                                if (i3 == m2_)
+                                {
+                                    for (int i = 1; i < m1 - 1; i++)
+                                    {
+                                        Alpha[i] = Lamda_t_(i, i2, i3, t, n) / (Lamda_t_(i, i2, i3, t, n) + (Lamda_t(i, i2, i3, t, n) - ro * C_p * V[time, i, i2, i3]) * (1 - Alpha[i - 1]));
+                                        Beta[i] = (Lamda_t(i, i2, i3, t, n) * Beta[i - 1]) / (Lamda_t_(i, i2, i3, t, n) + (Lamda_t(i, i2, i3, t, n) - ro * C_p * V[time, i, i2, i3]) * (1 - Alpha[i - 1]));
+                                    }
+                                }*/
+                                if (i3 <= m3_)
+                                {
+                                    for (int i = 1; i < m1 - 1; i++)
+                                    {
+                                        a = (tau / C_t) * (Lamda_(i, i2, i3, t, n) / h1) * (Niu_(i, i2, i3, t, n) / h1 - (ro * C_p * V_minus(i, i2, i3, t, n)) / Lamda_t(i, i2, i3, t, n));
+                                        b = (tau / C_t) * (Lamda_(i, i2, i3, t, n) / h1) * (Niu_(i, i2, i3, t, n) / h1 + (ro * C_p * V_plus(i, i2, i3, t, n)) / Lamda_t(i, i2, i3, t, n));
+                                        c = 1 + (tau / C_t) * (Niu_(i, i2, i3, t, n) * (Lamda_(i + 1, i2, i3, t, n) + Lamda_(i, i2, i3, t, n)) / (h1 * h1)
+                                        + ((ro * C_p) / Lamda_t(i, i2, i3, t, n)) * (Lamda_(i + 1, i2, i3, t, n) * V_plus(i, i2, i3, t, n) - Lamda_(i, i2, i3, t, n) * V_minus(i, i2, i3, t, n)));
+
+                                        Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                        Beta[i] = (a * Beta[i - 1] + T[time, i, i2, i3]) / (c - a * Alpha[i - 1]);
+                                    }
+                                }
+                                /*
                                 if (i3 == m3_)
                                 {
                                     for (int i = 1; i < m1 - 1; i++)
@@ -734,6 +866,20 @@ namespace MM3D._02
                                         Beta[i] = (Lamda_t(i, i2, i3, t, n) * Beta[i - 1]) / (Lamda_t_(i, i2, i3, t, n) + (Lamda_t(i, i2, i3, t, n) - ro * C_p * V[time, i, i2, i3]) * (1 - Alpha[i - 1]));
                                     }
                                 }*/
+
+                                if (i3 > m2_)
+                                {
+                                    for (int i = 1; i < m1 - 1; i++)
+                                    {
+                                        a = (tau / C_t) * (Lamda__(i, i2, i3, t, n) / h1) * (Niu_(i, i2, i3, t, n) / h1 - (ro * C_p * V_minus(i, i2, i3, t, n)) / Lamda_t_(i, i2, i3, t, n));
+                                        b = (tau / C_t) * (Lamda__(i, i2, i3, t, n) / h1) * (Niu_(i, i2, i3, t, n) / h1 + (ro * C_p * V_plus(i, i2, i3, t, n)) / Lamda_t_(i, i2, i3, t, n));
+                                        c = 1 + (tau / C_t) * (Niu_(i, i2, i3, t, n) * (Lamda__(i + 1, i2, i3, t, n) + Lamda__(i, i2, i3, t, n)) / (h1 * h1)
+                                        + ((ro * C_p) / Lamda_t_(i, i2, i3, t, n)) * (Lamda__(i + 1, i2, i3, t, n) * V_plus(i, i2, i3, t, n) - Lamda__(i, i2, i3, t, n) * V_minus(i, i2, i3, t, n)));
+
+                                        Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                        Beta[i] = (a * Beta[i - 1] + T[time, i, i2, i3]) / (c - a * Alpha[i - 1]);
+                                    }
+                                }
 
                                 if (i3 > m3_)
                                 {
@@ -768,6 +914,53 @@ namespace MM3D._02
                                 Alpha[0] = 0;
                                 Beta[0] = T[time, i1, 0, i3];
 
+                                if (i3 <= m2_)
+                                {
+                                    for (int i = 1; i < m2 - 1; i++)
+                                    {
+                                        a = (tau / C_t) * (Lamda_(i1, i, i3, t, n) / h2) * (Niu_(i1, i, i3, t, n) / h2 - (ro * C_p * V_minus(i1, i, i3, t, n)) / Lamda_t(i1, i, i3, t, n));
+                                        b = (tau / C_t) * (Lamda_(i1, i, i3, t, n) / h2) * (Niu_(i1, i, i3, t, n) / h2 + (ro * C_p * V_plus(i1, i, i3, t, n)) / Lamda_t(i1, i, i3, t, n));
+                                        c = 1 + (tau / C_t) * (Niu_(i1, i, i3, t, n) * (Lamda_(i1, i + 1, i3, t, n) + Lamda_(i1, i, i3, t, n)) / (h2 * h2)
+                                        + ((ro * C_p) / Lamda_t(i1, i, i3, t, n)) * (Lamda_(i1, i + 1, i3, t, n) * V_plus(i1, i, i3, t, n) - Lamda_(i1, i, i3, t, n) * V_minus(i1, i, i3, t, n)));
+
+                                        Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                        Beta[i] = (a * Beta[i - 1] + T[time, i1, i, i3]) / (c - a * Alpha[i - 1]);
+                                    }
+                                }
+                                /*
+                                if (i3 == m2_)
+                                {
+                                    for (int i = 1; i < m2 - 1; i++)
+                                    {
+                                        Alpha[i] = Lamda_t_(i1, i, i3, t, n) / (Lamda_t_(i1, i, i3, t, n) + (Lamda_t(i1, i, i3, t, n) - ro * C_p * V[time, i1, i, i3]) * (1 - Alpha[i - 1]));
+                                        Beta[i] = (Lamda_t(i1, i, i3, t, n) * Beta[i - 1]) / (Lamda_t_(i1, i, i3, t, n) + (Lamda_t(i1, i, i3, t, n) - ro * C_p * V[time, i1, i, i3]) * (1 - Alpha[i - 1]));
+                                    }
+                                }
+                                */
+                                if (i3 <= m2_)
+                                {
+                                    for (int i = 1; i < m2 - 1; i++)
+                                    {
+                                        a = (tau / C_t) * (Lamda_(i1, i, i3, t, n) / h2) * (Niu_(i1, i, i3, t, n) / h2 - (ro * C_p * V_minus(i1, i, i3, t, n)) / Lamda_t(i1, i, i3, t, n));
+                                        b = (tau / C_t) * (Lamda_(i1, i, i3, t, n) / h2) * (Niu_(i1, i, i3, t, n) / h2 + (ro * C_p * V_plus(i1, i, i3, t, n)) / Lamda_t(i1, i, i3, t, n));
+                                        c = 1 + (tau / C_t) * (Niu_(i1, i, i3, t, n) * (Lamda_(i1, i + 1, i3, t, n) + Lamda_(i1, i, i3, t, n)) / (h2 * h2)
+                                        + ((ro * C_p) / Lamda_t(i1, i, i3, t, n)) * (Lamda_(i1, i + 1, i3, t, n) * V_plus(i1, i, i3, t, n) - Lamda_(i1, i, i3, t, n) * V_minus(i1, i, i3, t, n)));
+
+                                        Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                        Beta[i] = (a * Beta[i - 1] + T[time, i1, i, i3]) / (c - a * Alpha[i - 1]);
+                                    }
+                                }
+                                /*
+                                if (i3 == m2_)
+                                {
+                                    for (int i = 1; i < m2 - 1; i++)
+                                    {
+                                        Alpha[i] = Lamda_t_(i1, i, i3, t, n) / (Lamda_t_(i1, i, i3, t, n) + (Lamda_t(i1, i, i3, t, n) - ro * C_p * V[time, i1, i, i3]) * (1 - Alpha[i - 1]));
+                                        Beta[i] = (Lamda_t(i1, i, i3, t, n) * Beta[i - 1]) / (Lamda_t_(i1, i, i3, t, n) + (Lamda_t(i1, i, i3, t, n) - ro * C_p * V[time, i1, i, i3]) * (1 - Alpha[i - 1]));
+                                    }
+                                }
+                                */
+
                                 if (i3 <= m3_)
                                 {
                                     for (int i = 1; i < m2 - 1; i++)
@@ -791,6 +984,20 @@ namespace MM3D._02
                                     }
                                 }
                                 */
+
+                                if (i3 > m2_)
+                                {
+                                    for (int i = 1; i < m2 - 1; i++)
+                                    {
+                                        a = (tau / C_t) * (Lamda__(i1, i, i3, t, n) / h2) * (Niu_(i1, i, i3, t, n) / h2 - (ro * C_p * V_minus(i1, i, i3, t, n)) / Lamda_t_(i1, i, i3, t, n));
+                                        b = (tau / C_t) * (Lamda__(i1, i, i3, t, n) / h2) * (Niu_(i1, i, i3, t, n) / h2 + (ro * C_p * V_plus(i1, i, i3, t, n)) / Lamda_t_(i1, i, i3, t, n));
+                                        c = 1 + (tau / C_t) * (Niu_(i1, i, i3, t, n) * (Lamda__(i1, i + 1, i3, t, n) + Lamda__(i1, i, i3, t, n)) / (h2 * h2)
+                                        + ((ro * C_p) / Lamda_t_(i1, i, i3, t, n)) * (Lamda__(i1, i + 1, i3, t, n) * V_plus(i1, i, i3, t, n) - Lamda__(i1, i, i3, t, n) * V_minus(i1, i, i3, t, n)));
+
+                                        Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                        Beta[i] = (a * Beta[i - 1] + T[time, i1, i, i3]) / (c - a * Alpha[i - 1]);
+                                    }
+                                }
 
                                 if (i3 > m3_)
                                 {
@@ -819,7 +1026,7 @@ namespace MM3D._02
                         for (int i1 = 1; i1 < m1; i1++)
                             for (int i2 = 1; i2 < m2; i2++)
                             {
-                                int m3_ = m3 - 1;
+                                int m2_ = m3 - 1;
 
                                 Alpha = new double[m3];
                                 Beta = new double[m3];
@@ -832,10 +1039,10 @@ namespace MM3D._02
                                 Alpha[0] = Alpha3;
                                 Beta[0] = Beta3;
 
-                                double niu3 = (tau * (Lamda_t(i1, i2, m3_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m3_, t, n)))
-                                    / (tau * (Lamda_t(i1, i2, m3_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m3_, t, n)) + 0.5 * (h3 * h3) * C_t);
-                                double miu3 = (0.5 * (h3 * h3) * C_t * T[time, i1, i2, m3_])
-                                    / (tau * (Lamda_t(i1, i2, m3_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m3_, t, n)) + 0.5 * (h3 * h3) * C_t);
+                                double niu3 = (tau * (Lamda_t(i1, i2, m2_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m2_, t, n)))
+                                    / (tau * (Lamda_t(i1, i2, m2_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m2_, t, n)) + 0.5 * (h3 * h3) * C_t);
+                                double miu3 = (0.5 * (h3 * h3) * C_t * T[time, i1, i2, m2_])
+                                    / (tau * (Lamda_t(i1, i2, m2_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m2_, t, n)) + 0.5 * (h3 * h3) * C_t);
 
                                 double T_m3_3 = (niu3 * Beta3 + miu3) / (1 - niu3 * Alpha3);
 
@@ -846,7 +1053,7 @@ namespace MM3D._02
 
                                 for (int i = 1; i < m3 - 1; i++)
                                 {
-                                    if (i < m3_)
+                                    if (i < m2_)
                                     { 
                                         a = (tau / C_t) * (Lamda_(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 - (ro * C_p * V_minus(i1, i2, i, t, n)) / Lamda_t(i1, i2, i, t, n));
                                         b = (tau / C_t) * (Lamda_(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 + (ro * C_p * V_plus(i1, i2, i, t, n)) / Lamda_t(i1, i2, i, t, n));
@@ -857,13 +1064,13 @@ namespace MM3D._02
                                         Beta[i] = (a * Beta[i - 1] + T[time, i1, i2, i]) / (c - a * Alpha[i - 1]);
                                     }
 
-                                    if (i == m3_)
+                                    if (i == m2_)
                                     {
                                         Alpha[i] = Lamda_t_(i1, i2, i, t, n) / (Lamda_t_(i1, i2, i, t, n) + (Lamda_t(i1, i2, i, t, n) - ro * C_p * V[time, i1, i2, i]) * (1 - Alpha[i - 1]));
                                         Beta[i] = (Lamda_t(i1, i2, i, t, n) * Beta[i - 1]) / (Lamda_t_(i1, i2, i, t, n) + (Lamda_t(i1, i2, i, t, n) - ro * C_p * V[time, i1, i2, i]) * (1 - Alpha[i - 1]));
                                     }
 
-                                    if (i > m3_)
+                                    if (i > m2_)
                                     {
                                         a = (tau / C_t) * (Lamda__(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 - (ro * C_p * V_minus(i1, i2, i, t, n)) / Lamda_t_(i1, i2, i, t, n));
                                         b = (tau / C_t) * (Lamda__(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 + (ro * C_p * V_plus(i1, i2, i, t, n)) / Lamda_t_(i1, i2, i, t, n));
@@ -889,6 +1096,79 @@ namespace MM3D._02
                                 }
                                 */
                             }
+
+                        for (int i2 = 1; i2 < m2; i2++)
+                        {
+                            int m3_ = m3 - 1;
+
+                            Alpha = new double[m3];
+                            Beta = new double[m3];
+
+                            Alpha3 = (tau * (Lamda_t( i1, i2, 0, t, n) - 0.5 * h3 * ro * C_p * V_plus( i1, i2, 0, t, n)))
+                                / (tau * (Lamda_t(i1, i2, 0, t, n) - 0.5 * h3 * ro * C_p * V_plus(i1, i2, 0, t, n)) + 0.5 * (h3 * h3) * C_t);
+                            Beta3 = (0.5 * (h3 * h3) * C_t * T[time, i1, i2, 0])
+                                / (tau * (Lamda_t(i1, i2, 0, t, n) - 0.5 * h3 * ro * C_p * V_plus(i1, i2, 0, t, n)) + 0.5 * (h3 * h3) * C_t);
+
+                            Alpha[0] = Alpha3;
+                            Beta[0] = Beta3;
+
+                            double niu3 = (tau * (Lamda_t(i1, i2, m3_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m3_, t, n)))
+                                / (tau * (Lamda_t(i1, i2, m3_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m3_, t, n)) + 0.5 * (h3 * h3) * C_t);
+                            double miu3 = (0.5 * (h3 * h3) * C_t * T[time, i1, i2, m3_])
+                                / (tau * (Lamda_t(i1, i2, m3_, t, n) - 0.5 * h3 * ro * C_p * V_minus(i1, i2, m3_, t, n)) + 0.5 * (h3 * h3) * C_t);
+
+                            double T_m3_3 = (niu3 * Beta3 + miu3) / (1 - niu3 * Alpha3);
+
+                            for (int n1 = 0; n1 <= 3; n1++)
+                            {
+                                T[time + 1 + n1, i1, i2, m3_] = T_m3_3;
+                            }
+
+                            for (int i = 1; i < m3 - 1; i++)
+                            {
+                                if (i < m3_)
+                                {
+                                    a = (tau / C_t) * (Lamda_(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 - (ro * C_p * V_minus(i1, i2, i, t, n)) / Lamda_t(i1, i2, i, t, n));
+                                    b = (tau / C_t) * (Lamda_(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 + (ro * C_p * V_plus(i1, i2, i, t, n)) / Lamda_t(i1, i2, i, t, n));
+                                    c = 1 + (tau / C_t) * (Niu_(i1, i2, i, t, n) * (Lamda_(i1, i2, i + 1, t, n) + Lamda_(i1, i2, i, t, n)) / (h3 * h3)
+                                    + ((ro * C_p) / Lamda_t(i1, i2, i, t, n)) * (Lamda_(i1, i2, i + 1, t, n) * V_plus(i1, i2, i, t, n) - Lamda_(i1, i2, i, t, n) * V_minus(i1, i2, i, t, n)));
+
+                                    Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                    Beta[i] = (a * Beta[i - 1] + T[time, i1, i2, i]) / (c - a * Alpha[i - 1]);
+                                }
+
+                                if (i == m3_)
+                                {
+                                    Alpha[i] = Lamda_t_(i1, i2, i, t, n) / (Lamda_t_(i1, i2, i, t, n) + (Lamda_t(i1, i2, i, t, n) - ro * C_p * V[time, i1, i2, i]) * (1 - Alpha[i - 1]));
+                                    Beta[i] = (Lamda_t(i1, i2, i, t, n) * Beta[i - 1]) / (Lamda_t_(i1, i2, i, t, n) + (Lamda_t(i1, i2, i, t, n) - ro * C_p * V[time, i1, i2, i]) * (1 - Alpha[i - 1]));
+                                }
+
+                                if (i > m3_)
+                                {
+                                    a = (tau / C_t) * (Lamda__(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 - (ro * C_p * V_minus(i1, i2, i, t, n)) / Lamda_t_(i1, i2, i, t, n));
+                                    b = (tau / C_t) * (Lamda__(i1, i2, i, t, n) / h3) * (Niu_(i1, i2, i, t, n) / h3 + (ro * C_p * V_plus(i1, i2, i, t, n)) / Lamda_t_(i1, i2, i, t, n));
+                                    c = 1 + (tau / C_t) * (Niu_(i1, i2, i, t, n) * (Lamda__(i1, i2, i + 1, t, n) + Lamda__(i1, i2, i, t, n)) / (h3 * h3)
+                                    + ((ro * C_p) / Lamda_t_(i1, i2, i, t, n)) * (Lamda__(i1, i2, i + 1, t, n) * V_plus(i1, i2, i, t, n) - Lamda__(i1, i2, i, t, n) * V_minus(i1, i2, i, t, n)));
+
+                                    Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                    Beta[i] = (a * Beta[i - 1] + T[time, i1, i2, i]) / (c - a * Alpha[i - 1]);
+                                }
+
+                            }
+
+                            // zvorotnia
+
+                            for (int i = m3 - 2; i >= 0; i--)
+                                T[time + 1, i1, i2, i] = Alpha[i] * T[time + 1, i1, i2, i + 1] + Beta[i];
+
+                            /*double T_0_3 = Alpha3 * T[time + 1, i1, i2, 1] + Beta3;
+
+                            for (int n1 = 0; n1 <= 3; n1++)
+                            {
+                                T[time + 1 + n1, i1, i2, 0] = T_0_3;
+                            }
+                            */
+                        }
                         break;
                     }
             }
@@ -917,7 +1197,7 @@ namespace MM3D._02
                 case 1:
                     {
                         for (int i2 = 1; i2 <= m2 - 1; i2++) ///////////////////////////
-                            for (int i3 = 0; i3 <= m3_ - 1; i3++)
+                            for (int i3 = 0; i3 <= m2_ - 1; i3++)
                             {
                                 int m1_ = m1 - 1;
 
@@ -960,6 +1240,50 @@ namespace MM3D._02
                                     C[time + 1, i, i2, i3] = Alpha[i] * C[time + 1, i + 1, i2, i3] + Beta[i],
                                     i--) ;
                             }
+
+                        for (int i3 = 0; i3 <= m3_ - 1; i3++)
+                        {
+                            int m1_ = m1 - 1;
+
+                            Alpha = new double[m1];
+                            Beta = new double[m1];
+
+                            Alpha[0] = 0;
+                            Beta[0] = C[time, 0, i2, i3];
+
+                            double niu1 = (tau * (d_i(m1_, i2, i3, t, n) - 0.5 * h3 * V_minus(m1_, i2, i3, t, n)))
+                                / (tau * (d_i(m1_, i2, i3, t, n) - 0.5 * h3 * V_minus(m1_, i2, i3, t, n)) + 0.5 * (h3 * h3) * (n_p + tau * gamma / 3.0));
+                            double miu1 = (0.5 * (h3 * h3) * (n_p * C[time, m1_, i2, i3] + tau * gamma * C_m / 3.0) - h3 * tau * d_i_t(m1_, i2, i3, t, n) * ((T[time + 1, m1_, i2, i3] - T[time + 1, m1_ - 1, i2, i3]) / h1))
+                                / (tau * (d_i(m1_, i2, i3, t, n) - 0.5 * h3 * V_minus(m1_, i2, i3, t, n)) + 0.5 * (h3 * h3) * (n_p + tau * gamma / 3.0));
+
+                            double C_m1_1 = niu1 * C[t * 3, m1 - 2, i2, i3] + miu1;
+
+                            for (int n1 = 0; n1 <= 3; n1++)
+                            {
+                                C[time + 1 + n1, m1 - 1, i2, i3] = C_m1_1;
+                            }
+
+                            for (int i = 1; i < m1 - 1; i++)
+                            {
+                                a = (tau / n_p) * (d_i(i, i2, i3, t, n) / h1) * ((Niu_C(i, i2, i3, t, n) / h1) - (V_minus(i, i2, i3, t, n) / D_(i, i2, i3, t, n)));
+                                b = (tau / n_p) * (d_i(i + 1, i2, i3, t, n) / h1) * ((Niu_C(i, i2, i3, t, n) / h1) + (V_plus(i, i2, i3, t, n) / D_(i, i2, i3, t, n)));
+                                c = 1.0 + (tau / n_p) * ((Niu_C(i, i2, i3, t, n)
+                                    * (d_i(i + 1, i2, i3, t, n) + d_i(i, i2, i3, t, n)) / (h1 * h1))
+                                    + (1.0 / (h1 * D_(i, i2, i3, t, n))) * (d_i(i + 1, i2, i3, t, n) * V_plus(i, i2, i3, t, n) - d_i(i, i2, i3, t, n) * V_minus(i, i2, i3, t, n)) + gamma / 3.0);
+                                s = (tau / n_p) * ((gamma / 3.0) * C_m + (d_i_t(i + 1, i2, i3, t, n)
+                                    * (T[time + 1, i + 1, i2, i3] - T[time + 1, i, i2, i3]) / h1
+                                    - d_i_t(i + 1, i2, i3, t, n) * (T[time + 1, i, i2, i3]
+                                    - T[time + 1, i - 1, i2, i3]) / h1) / (h1));
+
+                                Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                Beta[i] = (a * Beta[i - 1] + C[time, i, i2, i3] + s) / (c - a * Alpha[i - 1]);
+                            }
+
+                            //zvorotnia
+                            for (int i = m1 - 2; i > 0;
+                                C[time + 1, i, i2, i3] = Alpha[i] * C[time + 1, i + 1, i2, i3] + Beta[i],
+                                i--) ;
+                        }
                         break;
                     }
                 case 2:
@@ -1008,6 +1332,50 @@ namespace MM3D._02
 
 
                             }
+
+                        for (int i3 = 0; i3 <= m2_ - 1; i3++)
+                        {
+                            Alpha = new double[m2];
+                            Beta = new double[m2];
+                            Alpha[0] = 0;
+                            Beta[0] = C[time, i1, 0, i3];
+
+                            int m2_ = m2 - 1;
+
+                            double niu2 = ((tau * (d_i(i1, m2_, i3, t, n) - 0.5 * h3 * V_minus(i1, m2_, i3, t, n)))
+                                / (tau * (d_i(i1, m2_, i3, t, n) - 0.5 * h3 * V_minus(i1, m2_, i3, t, n)) + 0.5 * (h3 * h3) * (n_p + tau * gamma / 3.0)));
+                            double miu2 = ((0.5 * (h3 * h3) * (n_p * C[time, i1, m2_, i3] + tau * gamma * C_m / 3.0) - h3 * tau * d_i_t(i1, m2_, i3, t, n) * (T[time + 1, i1, m2_, i3] - T[time + 1, i1, m2_ - 1, i3]) / h2)
+                                / (tau * (d_i(i1, m2_, i3, t, n) - 0.5 * h3 * V_minus(i1, m2_, i3, t, n)) + 0.5 * (h3 * h3) * (n_p + tau * gamma / 3.0)));
+
+                            double C_m2_2 = niu2 * C[t * 3, i1, m3 - 2, i3] + miu2;
+
+                            for (int n1 = 0; n1 <= 3; n1++)
+                            {
+                                C[time + 1 + n1, i1, m2 - 1, i3] = C_m2_2;
+                            }
+
+                            for (int i = 1; i < m2 - 1; i++)
+                            {
+                                a = (tau / n_p) * (d_i(i1, i, i3, t, n) / h2) * (Niu_C(i1, i, i3, t, n) / h2 - V_minus(i1, i, i3, t, n) / D_(i1, i, i3, t, n));
+                                b = (tau / n_p) * (d_i(i1, i + 1, i3, t, n) / h2) * (Niu_C(i1, i, i3, t, n) / h2 + V_plus(i1, i, i3, t, n) / D_(i1, i, i3, t, n));
+                                c = 1 + (tau / n_p) * (Niu_C(i1, i, i3, t, n) * (d_i(i1, i + 1, i3, t, n) + d_i(i1, i, i3, t, n)) / (h2 * h2)
+                                    + (d_i(i1, i + 1, i3, t, n) * V_plus(i1, i, i3, t, n) - d_i(i1, i, i3, t, n) * V_minus(i1, i, i3, t, n)) / (h2 * D_(i1, i, i3, t, n)) + gamma / 3.0);
+                                s = (tau / n_p) * ((gamma / 3.0) * C_m + (d_i_t(i1, i + 1, i3, t, n)
+                                    * (T[time + 1, i1, i + 1, i3] - T[time + 1, i1, i, i3])
+                                    - d_i_t(i1, i + 1, i3, t, n) * (T[time + 1, i1, i, i3]
+                                    - T[time + 1, i1, i - 1, i3])) / (h2 * h2));
+                                Alpha[i] = b / (c - a * Alpha[i - 1]);
+                                Beta[i] = (a * Beta[i - 1] + C[time, i1, i, i3] + s) / (c - a * Alpha[i - 1]);
+                            }
+
+                            //zvorotnia
+
+                            for (int i = m2 - 2; i > 0;
+                                C[time + 1, i1, i, i3] = Alpha[i] * C[time + 1, i1, i + 1, i3] + Beta[i],
+                                i--) ;
+
+
+                        }
                         break;
                     }
                 case 3:
